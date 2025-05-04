@@ -100,10 +100,6 @@ public class Order {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((moment == null) ? 0 : moment.hashCode());
-        result = prime * result + ((status == null) ? 0 : status.hashCode());
-        result = prime * result + ((client == null) ? 0 : client.hashCode());
-        result = prime * result + ((payment == null) ? 0 : payment.hashCode());
         return result;
     }
 
@@ -120,23 +116,6 @@ public class Order {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
-            return false;
-        if (moment == null) {
-            if (other.moment != null)
-                return false;
-        } else if (!moment.equals(other.moment))
-            return false;
-        if (status != other.status)
-            return false;
-        if (client == null) {
-            if (other.client != null)
-                return false;
-        } else if (!client.equals(other.client))
-            return false;
-        if (payment == null) {
-            if (other.payment != null)
-                return false;
-        } else if (!payment.equals(other.payment))
             return false;
         return true;
     }
