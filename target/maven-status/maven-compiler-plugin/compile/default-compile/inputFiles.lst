@@ -1,4 +1,5 @@
 /media/ss/HD/estudos/devSuperior/dscommerce/src/main/java/com/devsuperior/dscommerce/DscommerceApplication.java
 /media/ss/HD/estudos/devSuperior/dscommerce/src/main/java/com/devsuperior/dscommerce/domain/entity/Order.java
+/media/ss/HD/estudos/devSuperior/dscommerce/src/main/java/com/devsuperior/dscommerce/domain/entity/Payment.java
 /media/ss/HD/estudos/devSuperior/dscommerce/src/main/java/com/devsuperior/dscommerce/domain/entity/User.java
 /media/ss/HD/estudos/devSuperior/dscommerce/src/main/java/com/devsuperior/dscommerce/domain/enums/OrderStatus.java
