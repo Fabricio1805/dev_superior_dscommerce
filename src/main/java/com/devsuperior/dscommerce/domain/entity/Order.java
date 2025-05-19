@@ -25,7 +25,7 @@ import jakarta.persistence.Table;
 @Table(name = "tb_order")
 public class Order {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
