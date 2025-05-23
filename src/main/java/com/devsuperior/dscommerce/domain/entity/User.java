@@ -40,7 +40,7 @@ public class User implements UserDetails {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(name = "birthDate", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     @Column(name = "password", nullable = false)
@@ -171,7 +171,27 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-       return email;
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }

@@ -12,11 +12,11 @@ import com.devsuperior.dscommerce.infrastructure.projections.UserDetailsProjecti
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query(nativeQuery = true, value = """
-            	SELECT tb_user.email AS username, tb_user.password, tb_role.id AS roleId, tb_role.authority
-            	FROM tb_user
-            	INNER JOIN tb_user_role ON tb_user.id = tb_user_role.user_id
-            	INNER JOIN tb_role ON tb_role.id = tb_user_role.role_id
-            	WHERE tb_user.email = :email
+            	SELECT app_user.email AS username, app_user.password, app_role.id AS roleId, app_role.authority
+            	FROM app_user
+            	INNER JOIN tb_user_role ON app_user.id = tb_user_role.user_id
+            	INNER JOIN app_role ON app_role.id = tb_user_role.role_id
+            	WHERE app_user.email = :email
             """)
     List<UserDetailsProjection> searchUserAndRolesByEmail(String email);
 
