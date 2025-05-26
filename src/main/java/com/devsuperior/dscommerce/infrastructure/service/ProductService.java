@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
 import com.devsuperior.dscommerce.application.dto.ProductDTO;
+import com.devsuperior.dscommerce.application.dto.ProductMinDTO;
 import com.devsuperior.dscommerce.domain.entity.Product;
 import com.devsuperior.dscommerce.infrastructure.exception.DatabaseException;
 import com.devsuperior.dscommerce.infrastructure.exception.NotFoundException;
@@ -28,10 +29,10 @@ public class ProductService {
         return new ProductDTO(product);
     }
 
-    public Page<ProductDTO> findAll(Pageable pageable) {
+    public Page<ProductMinDTO> findAll(Pageable pageable) {
         Page<Product> products = productRepository.searchAll(pageable);
 
-        return products.map(p -> new ProductDTO(p));
+        return products.map(p -> new ProductMinDTO(p));
     }
 
     public ProductDTO save(ProductDTO productDTO) {
