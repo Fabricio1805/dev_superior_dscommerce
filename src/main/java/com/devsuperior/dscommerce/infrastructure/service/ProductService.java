@@ -7,11 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
+import com.devsuperior.dscommerce.application.dto.CategoryDTO;
 import com.devsuperior.dscommerce.application.dto.ProductDTO;
 import com.devsuperior.dscommerce.application.dto.ProductMinDTO;
 import com.devsuperior.dscommerce.domain.entity.Product;
+import com.devsuperior.dscommerce.domain.entity.ProductCategory;
 import com.devsuperior.dscommerce.infrastructure.exception.DatabaseException;
 import com.devsuperior.dscommerce.infrastructure.exception.NotFoundException;
+import com.devsuperior.dscommerce.infrastructure.repository.ProductCategoryRepository;
 import com.devsuperior.dscommerce.infrastructure.repository.ProductRepository;
 
 import jakarta.transaction.Transactional;
@@ -23,8 +26,12 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductCategoryRepository productCategoryRepository;
+
     public ProductDTO findById(final Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Produto não encontrado"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
 
         return new ProductDTO(product);
     }
@@ -46,7 +53,8 @@ public class ProductService {
     }
 
     public void update(Long id, ProductDTO productDTO) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Produto não encontrado"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
 
         toDtoFromEntity(productDTO, product);
 
@@ -54,19 +62,18 @@ public class ProductService {
 
     }
 
-
-    @org.springframework.transaction.annotation.Transactional(propagation = Propagation.SUPPORTS )
+    @org.springframework.transaction.annotation.Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
-        if(!productRepository.existsById(id)){
+        if (!productRepository.existsById(id)) {
             throw new NotFoundException("Produto não encontrado");
         }
 
         try {
             productRepository.deleteById(id);
-        }catch(DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha na integridade referencial");
         }
-        
+
     }
 
     private void toDtoFromEntity(ProductDTO productDTO, Product product) {
@@ -74,5 +81,14 @@ public class ProductService {
         product.setDescription(productDTO.getDescription());
         product.setImageUrl(productDTO.getImageUrl());
         product.setPrice(productDTO.getPrice());
+
+        product.getCategories().clear();
+
+        for (CategoryDTO categoryDTO : productDTO.getCategories()) {
+
+            ProductCategory productCategory = productCategoryRepository.findById(categoryDTO.getId())
+                    .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+            product.getCategories().add(productCategory);
+        }
     }
 }
