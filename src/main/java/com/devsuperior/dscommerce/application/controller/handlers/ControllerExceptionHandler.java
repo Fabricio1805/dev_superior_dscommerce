@@ -14,6 +14,7 @@ import com.devsuperior.dscommerce.application.dto.FieldMessagedTO;
 import com.devsuperior.dscommerce.application.dto.ValidationErrorDTO;
 import com.devsuperior.dscommerce.infrastructure.exception.DatabaseException;
 import com.devsuperior.dscommerce.infrastructure.exception.NotFoundException;
+import com.devsuperior.dscommerce.infrastructure.exception.ForbiddenException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -46,4 +47,11 @@ public class ControllerExceptionHandler {
     }
 
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomErrorDTO> Forbidden(ForbiddenException forbiddenException, HttpServletRequest request) {
+        CustomErrorDTO customError = new CustomErrorDTO(Instant.now(), HttpStatus.FORBIDDEN.value(),
+                forbiddenException.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(customError);
+    }
+    
 }

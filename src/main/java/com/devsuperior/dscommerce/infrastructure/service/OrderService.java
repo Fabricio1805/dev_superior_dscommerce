@@ -33,8 +33,13 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private AuthService authService;
+
     public OrderDTO findById(final Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido não encontrado"));
+
+        authService.validSelfOrAdmin(order.getClient().getId());
 
         return new OrderDTO(order);
     }
