@@ -18,8 +18,6 @@ import com.devsuperior.dscommerce.infrastructure.service.OrderService;
 
 import jakarta.validation.Valid;
 
-
-
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
